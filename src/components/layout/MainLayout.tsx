@@ -12,7 +12,10 @@ import {
   User,
   Dumbbell,
   LineChart,
-  Home
+  Home,
+  BookOpen,
+  Bell,
+  CreditCard
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -39,14 +42,17 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     { name: 'Training Plans', path: '/training-plans', icon: <Activity size={20} /> },
     { name: 'Trainers', path: '/trainers', icon: <Users size={20} /> },
     { name: 'Events', path: '/events', icon: <Calendar size={20} /> },
+    { name: 'My Progress', path: '/progress', icon: <LineChart size={20} /> },
+    { name: 'Subscriptions', path: '/subscriptions', icon: <CreditCard size={20} /> },
     { name: 'Settings', path: '/settings', icon: <Settings size={20} /> },
   ];
 
   const trainerNav = [
     { name: 'Dashboard', path: '/trainer/dashboard', icon: <Home size={20} /> },
     { name: 'Clients', path: '/trainer/clients', icon: <Users size={20} /> },
-    { name: 'Create Plans', path: '/trainer/plans', icon: <Activity size={20} /> },
+    { name: 'Create Plans', path: '/trainer/plans', icon: <BookOpen size={20} /> },
     { name: 'Schedule', path: '/trainer/schedule', icon: <Calendar size={20} /> },
+    { name: 'Messages', path: '/trainer/messages', icon: <Bell size={20} /> },
     { name: 'Settings', path: '/settings', icon: <Settings size={20} /> },
   ];
 
@@ -55,6 +61,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     { name: 'Members', path: '/admin/members', icon: <User size={20} /> },
     { name: 'Trainers', path: '/admin/trainers', icon: <Dumbbell size={20} /> },
     { name: 'Events', path: '/admin/events', icon: <Calendar size={20} /> },
+    { name: 'Subscriptions', path: '/admin/subscriptions', icon: <CreditCard size={20} /> },
     { name: 'Settings', path: '/admin/settings', icon: <Settings size={20} /> },
   ];
   
@@ -144,13 +151,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <header className="bg-white border-b">
           <div className="px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <div className="flex items-center md:hidden">
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Menu />
-                  </Button>
-                </SheetTrigger>
-              </Sheet>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => setShowMobileNav(true)}
+              >
+                <Menu />
+              </Button>
               <h1 className="text-xl font-bold ml-2 text-gradient">FitFlow</h1>
             </div>
             <div className="flex items-center">

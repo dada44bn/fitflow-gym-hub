@@ -16,9 +16,27 @@ import TrainersPage from "./pages/user/Trainers";
 import SubscriptionsPage from "./pages/user/Subscriptions";
 import NotFound from "./pages/NotFound";
 
+// New pages
+import TrainingPlansPage from "./pages/user/TrainingPlans";
+import EventsPage from "./pages/user/Events";
+import ProgressPage from "./pages/user/Progress";
+import SettingsPage from "./pages/user/Settings";
+
+// Trainer pages
+import TrainerClientsPage from "./pages/trainer/Clients";
+import TrainerPlansPage from "./pages/trainer/Plans";
+import TrainerSchedulePage from "./pages/trainer/Schedule";
+import TrainerMessagesPage from "./pages/trainer/Messages";
+
+// Admin pages
+import AdminMembersPage from "./pages/admin/Members";
+import AdminTrainersPage from "./pages/admin/Trainers";
+import AdminEventsPage from "./pages/admin/Events";
+import AdminSubscriptionsPage from "./pages/admin/Subscriptions";
+import AdminSettingsPage from "./pages/admin/Settings";
+
 const queryClient = new QueryClient();
 
-// No auth protection for now
 const App = () => {
   const currentUser = getCurrentUser();
   
@@ -57,6 +75,38 @@ const App = () => {
                 </MainLayout>
               } 
             />
+            <Route 
+              path="/training-plans" 
+              element={
+                <MainLayout>
+                  <TrainingPlansPage />
+                </MainLayout>
+              } 
+            />
+            <Route 
+              path="/events" 
+              element={
+                <MainLayout>
+                  <EventsPage />
+                </MainLayout>
+              } 
+            />
+            <Route 
+              path="/progress" 
+              element={
+                <MainLayout>
+                  <ProgressPage />
+                </MainLayout>
+              } 
+            />
+            <Route 
+              path="/settings" 
+              element={
+                <MainLayout>
+                  <SettingsPage />
+                </MainLayout>
+              } 
+            />
             
             {/* Trainer Routes */}
             <Route 
@@ -67,6 +117,38 @@ const App = () => {
                 </MainLayout>
               } 
             />
+            <Route 
+              path="/trainer/clients" 
+              element={
+                <MainLayout>
+                  <TrainerClientsPage />
+                </MainLayout>
+              } 
+            />
+            <Route 
+              path="/trainer/plans" 
+              element={
+                <MainLayout>
+                  <TrainerPlansPage />
+                </MainLayout>
+              } 
+            />
+            <Route 
+              path="/trainer/schedule" 
+              element={
+                <MainLayout>
+                  <TrainerSchedulePage />
+                </MainLayout>
+              } 
+            />
+            <Route 
+              path="/trainer/messages" 
+              element={
+                <MainLayout>
+                  <TrainerMessagesPage />
+                </MainLayout>
+              } 
+            />
             
             {/* Admin Routes */}
             <Route 
@@ -74,6 +156,46 @@ const App = () => {
               element={
                 <MainLayout>
                   <AdminDashboard />
+                </MainLayout>
+              } 
+            />
+            <Route 
+              path="/admin/members" 
+              element={
+                <MainLayout>
+                  <AdminMembersPage />
+                </MainLayout>
+              } 
+            />
+            <Route 
+              path="/admin/trainers" 
+              element={
+                <MainLayout>
+                  <AdminTrainersPage />
+                </MainLayout>
+              } 
+            />
+            <Route 
+              path="/admin/events" 
+              element={
+                <MainLayout>
+                  <AdminEventsPage />
+                </MainLayout>
+              } 
+            />
+            <Route 
+              path="/admin/subscriptions" 
+              element={
+                <MainLayout>
+                  <AdminSubscriptionsPage />
+                </MainLayout>
+              } 
+            />
+            <Route 
+              path="/admin/settings" 
+              element={
+                <MainLayout>
+                  <AdminSettingsPage />
                 </MainLayout>
               } 
             />
