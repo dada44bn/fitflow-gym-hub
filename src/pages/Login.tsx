@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -16,6 +16,16 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Auto-login effect - authentication removed for now
+  useEffect(() => {
+    // Automatically redirect to dashboard after a short delay
+    const timer = setTimeout(() => {
+      navigate('/dashboard');
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -27,20 +37,14 @@ const Login: React.FC = () => {
         description: `Welcome back, ${user.name}!`,
       });
       
-      // Redirect based on user role
-      if (user.role === 'admin') {
-        navigate('/admin/dashboard');
-      } else if (user.role === 'trainer') {
-        navigate('/trainer/dashboard');
-      } else {
-        navigate('/dashboard');
-      }
+      navigate('/dashboard');
     } catch (error) {
+      // This won't be reached with current auth implementation
       toast({
-        title: 'Login failed',
-        description: 'Invalid credentials. Please try again.',
-        variant: 'destructive',
+        title: 'Login successful anyway',
+        description: 'Authentication is disabled for now.',
       });
+      navigate('/dashboard');
     } finally {
       setIsLoading(false);
     }
@@ -61,7 +65,7 @@ const Login: React.FC = () => {
           <CardHeader>
             <CardTitle>Sign In</CardTitle>
             <CardDescription>
-              Enter your credentials to access your account
+              Authentication is disabled for now. Click Sign In to continue.
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleLogin}>
@@ -74,48 +78,35 @@ const Login: React.FC = () => {
                   placeholder="youremail@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  required
                 />
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <a href="#" className="text-xs text-fitflow-primary hover:underline">
-                    Forgot password?
-                  </a>
                 </div>
                 <Input
                   id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required
                 />
               </div>
               
               <div className="text-sm text-gray-500 mt-2">
-                <p>Demo Accounts:</p>
-                <p>User: john@example.com</p>
-                <p>Trainer: sarah@example.com</p>
-                <p>Admin: admin@example.com</p>
-                <p className="mt-1">(Any password will work)</p>
+                <p>Authentication is currently disabled</p>
+                <p>You will be automatically redirected to the dashboard</p>
               </div>
             </CardContent>
             <CardFooter>
               <Button 
                 type="submit" 
                 className="w-full fitflow-gradient hover:opacity-90 transition-opacity"
-                disabled={isLoading}
               >
-                {isLoading ? 'Signing in...' : 'Sign In'}
+                Sign In
               </Button>
             </CardFooter>
           </form>
         </Card>
-        
-        <p className="text-center text-sm text-white mt-4">
-          Don't have an account? <a href="#" className="font-medium hover:underline">Sign up</a>
-        </p>
       </div>
     </div>
   );

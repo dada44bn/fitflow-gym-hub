@@ -1,5 +1,4 @@
-
-// Mock authentication service - to be replaced with real auth later
+// Mock authentication service - authentication removed for now
 
 export interface User {
   id: string;
@@ -34,37 +33,30 @@ const users: User[] = [
   }
 ];
 
-// Mock current user - in a real app, this would come from authentication state
-let currentUser: User | null = null;
+// For now, automatically set the current user as a user to bypass authentication
+let currentUser: User = users[0];
 
-export function getCurrentUser(): User | null {
+export function getCurrentUser(): User {
   return currentUser;
 }
 
 export function login(email: string, password: string): Promise<User> {
-  return new Promise((resolve, reject) => {
-    // Simulate API call
-    setTimeout(() => {
-      const user = users.find(u => u.email === email);
-      
-      if (user) {
-        currentUser = user;
-        resolve(user);
-      } else {
-        reject(new Error('Invalid credentials'));
-      }
-    }, 500);
+  return new Promise((resolve) => {
+    // Always succeeds - no real authentication for now
+    const user = users.find(u => u.email === email) || users[0];
+    currentUser = user;
+    resolve(user);
   });
 }
 
 export function logout(): void {
-  currentUser = null;
+  // No-op for now, keep the current user
 }
 
 export function isAuthenticated(): boolean {
-  return currentUser !== null;
+  return true; // Always authenticated for now
 }
 
 export function hasRole(role: string): boolean {
-  return currentUser?.role === role;
+  return true; // Allow access to all roles for now
 }

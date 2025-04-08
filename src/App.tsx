@@ -18,46 +18,10 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Auth guard for protected routes
-const ProtectedRoute = ({ children, requiredRole }: { children: JSX.Element, requiredRole?: string }) => {
-  const currentUser = getCurrentUser();
-  
-  if (!currentUser) {
-    return <Navigate to="/login" />;
-  }
-  
-  if (requiredRole && currentUser.role !== requiredRole) {
-    // Redirect to appropriate dashboard based on role
-    if (currentUser.role === 'admin') {
-      return <Navigate to="/admin/dashboard" />;
-    }
-    if (currentUser.role === 'trainer') {
-      return <Navigate to="/trainer/dashboard" />;
-    }
-    return <Navigate to="/dashboard" />;
-  }
-  
-  return children;
-};
-
-// Route configuration based on user role
+// No auth protection for now
 const App = () => {
   const currentUser = getCurrentUser();
   
-  // Determine the initial route based on authentication status and role
-  const getInitialRoute = () => {
-    if (!currentUser) return "/login";
-    
-    switch (currentUser.role) {
-      case 'admin':
-        return "/admin/dashboard";
-      case 'trainer':
-        return "/trainer/dashboard";
-      default:
-        return "/dashboard";
-    }
-  };
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -65,38 +29,32 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Navigate to={getInitialRoute()} replace />} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/login" element={<Login />} />
             
             {/* User Routes */}
             <Route 
               path="/dashboard" 
               element={
-                <ProtectedRoute requiredRole="user">
-                  <MainLayout>
-                    <UserDashboard />
-                  </MainLayout>
-                </ProtectedRoute>
+                <MainLayout>
+                  <UserDashboard />
+                </MainLayout>
               } 
             />
             <Route 
               path="/trainers" 
               element={
-                <ProtectedRoute requiredRole="user">
-                  <MainLayout>
-                    <TrainersPage />
-                  </MainLayout>
-                </ProtectedRoute>
+                <MainLayout>
+                  <TrainersPage />
+                </MainLayout>
               } 
             />
             <Route 
               path="/subscriptions" 
               element={
-                <ProtectedRoute requiredRole="user">
-                  <MainLayout>
-                    <SubscriptionsPage />
-                  </MainLayout>
-                </ProtectedRoute>
+                <MainLayout>
+                  <SubscriptionsPage />
+                </MainLayout>
               } 
             />
             
@@ -104,11 +62,9 @@ const App = () => {
             <Route 
               path="/trainer/dashboard" 
               element={
-                <ProtectedRoute requiredRole="trainer">
-                  <MainLayout>
-                    <TrainerDashboard />
-                  </MainLayout>
-                </ProtectedRoute>
+                <MainLayout>
+                  <TrainerDashboard />
+                </MainLayout>
               } 
             />
             
@@ -116,11 +72,9 @@ const App = () => {
             <Route 
               path="/admin/dashboard" 
               element={
-                <ProtectedRoute requiredRole="admin">
-                  <MainLayout>
-                    <AdminDashboard />
-                  </MainLayout>
-                </ProtectedRoute>
+                <MainLayout>
+                  <AdminDashboard />
+                </MainLayout>
               } 
             />
             
