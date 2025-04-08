@@ -103,12 +103,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </div>
 
       {/* Mobile Sidebar */}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <Menu />
-          </Button>
-        </SheetTrigger>
+      <Sheet open={showMobileNav} onOpenChange={setShowMobileNav}>
         <SheetContent side="left" className="w-64 p-0">
           <div className="flex items-center justify-between h-16 border-b px-4">
             <Link to="/" className="flex items-center">
@@ -149,11 +144,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <header className="bg-white border-b">
           <div className="px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <div className="flex items-center md:hidden">
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu />
-                </Button>
-              </SheetTrigger>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <Menu />
+                  </Button>
+                </SheetTrigger>
+              </Sheet>
               <h1 className="text-xl font-bold ml-2 text-gradient">FitFlow</h1>
             </div>
             <div className="flex items-center">
