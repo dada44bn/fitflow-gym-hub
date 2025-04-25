@@ -2,20 +2,19 @@
 import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { 
-  Activity, 
   Users, 
   Calendar, 
   Settings, 
   LogOut, 
-  Menu, 
-  X,
-  User,
-  Dumbbell,
-  LineChart,
-  Home,
-  BookOpen,
-  Bell,
-  CreditCard
+  Menu,
+  LayoutDashboard,
+  ClipboardList,
+  FileText,
+  Edit,
+  Badge,
+  CreditCard,
+  BarChart2,
+  Activity
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -38,31 +37,33 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   };
 
   const userNav = [
-    { name: 'Dashboard', path: '/dashboard', icon: <Home size={20} /> },
-    { name: 'Training Plans', path: '/training-plans', icon: <Activity size={20} /> },
+    { name: 'Dashboard', path: '/dashboard', icon: <LayoutDashboard size={20} /> },
+    { name: 'Training Plans', path: '/training-plans', icon: <ClipboardList size={20} /> },
     { name: 'Trainers', path: '/trainers', icon: <Users size={20} /> },
     { name: 'Events', path: '/events', icon: <Calendar size={20} /> },
-    { name: 'My Progress', path: '/progress', icon: <LineChart size={20} /> },
+    { name: 'My Progress', path: '/progress', icon: <Activity size={20} /> },
     { name: 'Subscriptions', path: '/subscriptions', icon: <CreditCard size={20} /> },
     { name: 'Settings', path: '/settings', icon: <Settings size={20} /> },
   ];
 
+  // Updated trainer navigation
   const trainerNav = [
-    { name: 'Dashboard', path: '/trainer/dashboard', icon: <Home size={20} /> },
-    { name: 'Clients', path: '/trainer/clients', icon: <Users size={20} /> },
-    { name: 'Create Plans', path: '/trainer/plans', icon: <BookOpen size={20} /> },
+    { name: 'Dashboard', path: '/trainer/dashboard', icon: <LayoutDashboard size={20} /> },
+    { name: 'My Clients', path: '/trainer/clients', icon: <Users size={20} /> },
+    { name: 'Training Plans', path: '/trainer/plans', icon: <ClipboardList size={20} /> },
     { name: 'Schedule', path: '/trainer/schedule', icon: <Calendar size={20} /> },
-    { name: 'Messages', path: '/trainer/messages', icon: <Bell size={20} /> },
+    { name: 'Documents', path: '/trainer/messages', icon: <FileText size={20} /> },
     { name: 'Settings', path: '/settings', icon: <Settings size={20} /> },
   ];
 
+  // Updated admin navigation
   const adminNav = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: <LineChart size={20} /> },
-    { name: 'Members', path: '/admin/members', icon: <User size={20} /> },
-    { name: 'Trainers', path: '/admin/trainers', icon: <Dumbbell size={20} /> },
-    { name: 'Events', path: '/admin/events', icon: <Calendar size={20} /> },
-    { name: 'Subscriptions', path: '/admin/subscriptions', icon: <CreditCard size={20} /> },
-    { name: 'Settings', path: '/admin/settings', icon: <Settings size={20} /> },
+    { name: 'Dashboard', path: '/admin/dashboard', icon: <BarChart2 size={20} /> },
+    { name: 'Members', path: '/admin/members', icon: <Users size={20} /> },
+    { name: 'Staff & Trainers', path: '/admin/trainers', icon: <Badge size={20} /> },
+    { name: 'Activities', path: '/admin/events', icon: <Calendar size={20} /> },
+    { name: 'Billing', path: '/admin/subscriptions', icon: <CreditCard size={20} /> },
+    { name: 'System Settings', path: '/admin/settings', icon: <Settings size={20} /> },
   ];
   
   // Choose navigation based on user role
