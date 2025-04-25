@@ -1,34 +1,20 @@
 
 import React, { useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { 
-  Users, 
-  Calendar, 
-  Settings, 
-  LogOut, 
-  Menu,
-  LayoutDashboard,
-  ClipboardList,
-  FileText,
-  Edit,
-  Badge,
-  CreditCard,
-  BarChart2,
-  Activity,
-  Dumbbell
-} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Menu, Dumbbell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
 import { getCurrentUser, logout } from '@/lib/auth';
+import { UserSidebar } from './UserSidebar';
+import { TrainerSidebar } from './TrainerSidebar';
+import { AdminSidebar } from './AdminSidebar';
 
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const location = useLocation();
   const [showMobileNav, setShowMobileNav] = useState(false);
   const currentUser = getCurrentUser();
   
@@ -37,41 +23,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     window.location.href = '/login';
   };
 
-  const userNav = [
-    { name: 'Dashboard', path: '/dashboard', icon: <LayoutDashboard size={20} /> },
-    { name: 'Training Plans', path: '/training-plans', icon: <ClipboardList size={20} /> },
-    { name: 'Trainers', path: '/trainers', icon: <Users size={20} /> },
-    { name: 'Events', path: '/events', icon: <Calendar size={20} /> },
-    { name: 'My Progress', path: '/progress', icon: <Activity size={20} /> },
-    { name: 'Subscriptions', path: '/subscriptions', icon: <CreditCard size={20} /> },
-    { name: 'Settings', path: '/settings', icon: <Settings size={20} /> },
-  ];
-
-  // Updated trainer navigation
-  const trainerNav = [
-    { name: 'Dashboard', path: '/trainer/dashboard', icon: <LayoutDashboard size={20} /> },
-    { name: 'My Clients', path: '/trainer/clients', icon: <Users size={20} /> },
-    { name: 'Training Plans', path: '/trainer/plans', icon: <ClipboardList size={20} /> },
-    { name: 'Schedule', path: '/trainer/schedule', icon: <Calendar size={20} /> },
-    { name: 'Documents', path: '/trainer/messages', icon: <FileText size={20} /> },
-    { name: 'Settings', path: '/settings', icon: <Settings size={20} /> },
-  ];
-
-  // Updated admin navigation
-  const adminNav = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: <BarChart2 size={20} /> },
-    { name: 'Members', path: '/admin/members', icon: <Users size={20} /> },
-    { name: 'Staff & Trainers', path: '/admin/trainers', icon: <Badge size={20} /> },
-    { name: 'Activities', path: '/admin/events', icon: <Calendar size={20} /> },
-    { name: 'Billing', path: '/admin/subscriptions', icon: <CreditCard size={20} /> },
-    { name: 'System Settings', path: '/admin/settings', icon: <Settings size={20} /> },
-  ];
-  
-  // Choose navigation based on user role
-  const navigation = 
-    currentUser?.role === 'trainer' ? trainerNav : 
-    currentUser?.role === 'admin' ? adminNav : 
-    userNav;
+  // Choose sidebar component based on user role
+  const SidebarComponent = 
+    currentUser?.role === 'trainer' ? TrainerSidebar :
+    currentUser?.role === 'admin' ? AdminSidebar :
+    UserSidebar;
 
   return (
     <div className="flex h-screen bg-background">
@@ -83,32 +39,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <h1 className="text-xl font-bold text-gradient">FitFlow</h1>
           </Link>
         </div>
-        <div className="flex flex-col flex-1 overflow-y-auto">
-          <nav className="flex-1 px-4 py-4 space-y-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={cn(
-                  "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                  location.pathname === item.path
-                    ? "bg-fitflow-light text-fitflow-primary"
-                    : "text-gray-600 hover:bg-gray-50"
-                )}
-              >
-                <span className="mr-3">{item.icon}</span>
-                {item.name}
-              </Link>
-            ))}
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center px-3 py-2 mt-6 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 transition-colors"
-            >
-              <LogOut size={20} className="mr-3" />
-              Logout
-            </button>
-          </nav>
-        </div>
+        <SidebarComponent onLogout={handleLogout} />
       </div>
 
       {/* Mobile Sidebar */}
@@ -120,30 +51,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <h1 className="text-xl font-bold text-gradient">FitFlow</h1>
             </Link>
           </div>
-          <nav className="flex-1 px-4 py-4 space-y-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={cn(
-                  "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                  location.pathname === item.path
-                    ? "bg-fitflow-light text-fitflow-primary"
-                    : "text-gray-600 hover:bg-gray-50"
-                )}
-              >
-                <span className="mr-3">{item.icon}</span>
-                {item.name}
-              </Link>
-            ))}
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center px-3 py-2 mt-6 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 transition-colors"
-            >
-              <LogOut size={20} className="mr-3" />
-              Logout
-            </button>
-          </nav>
+          <SidebarComponent onLogout={handleLogout} />
         </SheetContent>
       </Sheet>
 
