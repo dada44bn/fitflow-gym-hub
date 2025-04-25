@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -7,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Building, Mail, Phone, MapPin, Globe, Lock, Bell, Users, Cloud, Shield, Clock, FileText } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { CreditCard } from 'lucide-react';
 
 const AdminSettingsPage: React.FC = () => {
   return (
